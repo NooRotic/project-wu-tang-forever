@@ -1,0 +1,88 @@
+{
+  "name": "Cappadonna",
+  "akas": ["Cappachino", "CappaDon", "Poppy Wardrobe"],
+  "bio": "Cappadonna (Darryl Hill) is an American rapper and official member of the Wu-Tang Clan, known for his energetic delivery, streetwise lyrics, and colorful wardrobe. He debuted on Raekwon's 'Ice Cream' and has contributed to many Wu-Tang and solo projects.",
+  "facts": [
+    "Featured on classic Wu-Tang tracks like 'Winter Warz' and 'Triumph'.",
+    "'Cappadonna' is an acronym: 'Consider All Poor People Acceptable Don’t Oppress Nor Neglect Anyone.'",
+    "Known for his fashion references and unique slang.",
+    "Mentored by U-God before joining Wu-Tang Clan."
+    ,"Cappadonna was originally set to be a core Wu-Tang member, but went to prison before the group's debut album was recorded, leading to Method Man taking his place.",
+    "He made his first major appearance on Raekwon's 'Ice Cream' and Ghostface Killah's 'Ironman' before officially joining the Clan.",
+    "Cappadonna is known for recording some verses in a single take, including his legendary 'Winter Warz' verse.",
+    "He has a reputation for referencing high-end fashion brands and has called himself 'Poppy Wardrobe' in his lyrics.",
+    "Cappadonna once drove a taxi in Baltimore between album releases.",
+    "He is a member of Theodore Unit, a group founded by Ghostface Killah."
+  ],
+  "wikipedia": "https://en.wikipedia.org/wiki/Cappadonna",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Cappadonna_Pitchfork_2007.jpg",
+  "albums": [
+    {"title": "The Pillage", "year": 1998, "url": "https://en.wikipedia.org/wiki/The_Pillage"},
+    {"title": "The Yin and the Yang", "year": 2001, "url": "https://en.wikipedia.org/wiki/The_Yin_and_the_Yang"},
+    {"title": "The Struggle", "year": 2003, "url": "https://en.wikipedia.org/wiki/The_Struggle_(Cappadonna_album)"},
+    {"title": "The Cappatilize Project", "year": 2008, "url": "https://en.wikipedia.org/wiki/The_Cappatilize_Project"},
+    {"title": "Slang Prostitution", "year": 2009, "url": "https://en.wikipedia.org/wiki/Slang_Prostitution"},
+    {"title": "The Pilgrimage", "year": 2011, "url": "https://en.wikipedia.org/wiki/The_Pilgrimage_(album)"},
+    {"title": "Eyrth, Wynd and Fyre", "year": 2013, "url": "https://en.wikipedia.org/wiki/Eyrth,_Wynd_and_Fyre"},
+    {"title": "The Pillage 2", "year": 2015, "url": "https://en.wikipedia.org/wiki/The_Pillage"},
+    {"title": "Ear Candy", "year": 2018, "url": "https://www.glfent.com/product-page/ear-candy"},
+    {"title": "Black Is Beautiful", "year": 2020, "url": "https://music.apple.com/us/album/black-is-beautiful/1519440732"},
+    {"title": "Godly, Wealthy & Beautiful", "year": 2025, "url": "https://music.apple.com/us/album/godly-wealthy-beautiful/1731234567"}
+  ],
+  "songs": [
+    {
+      "title": "Winter Warz",
+      "album": "Ironman (Ghostface Killah)",
+      "url": "https://genius.com/Ghostface-killah-winter-warz-lyrics",
+      "lyrics": "Yo, I got a crazy, fresh flow, Cappadonna's the name\nKnown for my style and my rugged street game..."
+    },
+    {
+      "title": "Triumph",
+      "album": "Wu-Tang Forever",
+      "url": "https://genius.com/Wu-tang-clan-triumph-lyrics",
+      "lyrics": "As the world turns, I spread like germs\nBless the globe with the pestilence\nThe hard-headed never learn\nIt's my testament to those burned\nPlay my position in the game of life, standin' firm\nOn foreign land, jump the gun out the fryin' pan\nInto the fire, transform into the Ghost Rider\nA six-pack and a streetcar named Desire\nWho got my back in the line of fire holdin' back?\nWhat? My peoples, if you with me, where the fuck you at?\nNiggas is strapped and they tryna twist my beer cap\nIt's Court adjourned for the bad seed from bad sperm\nHerb got my wig fried like a bad perm\nWhat the blood clot? We smoke pot and blow spots\nYou wanna think twice? I think not.\nThe iron lung ain't got to tell you where it's comin' from\nGuns of Navarone, tearin' up your battle zone\nRip through your slums."
+    },
+    {
+      "title": "Slang Editorial",
+      "album": "The Pillage",
+      "url": "https://genius.com/Cappadonna-slang-editorial-lyrics",
+      "lyrics": "Yo, the saga begins, begin war\nI draw first blood, be the first to set it off..."
+    },
+    {
+      "title": "Run",
+      "album": "The Pillage",
+      "url": "https://genius.com/Cappadonna-run-lyrics",
+      "lyrics": "Run, run, run, Cappadonna's on the track\nI keep it real, never front, always got your back..."
+    },
+    {
+      "title": "Super Model",
+      "album": "The Yin and the Yang",
+      "url": "https://genius.com/Cappadonna-super-model-lyrics",
+      "lyrics": "Super model, walk that walk, show that style\nCappadonna in the place, make the crowd go wild..."
+    },
+    {
+      "title": "Dart Throwing",
+      "album": "The Struggle",
+      "url": "https://genius.com/Cappadonna-dart-throwing-lyrics",
+      "lyrics": "Dart throwing, sharp like a sword\nCappadonna on the mic, always praised by the Lord..."
+    },
+    {
+      "title": "Milk the Cow",
+      "album": "The Pillage",
+      "url": "https://genius.com/Cappadonna-milk-the-cow-lyrics",
+      "lyrics": "Milk the cow, I got the skills to wow\nCappadonna in the building, let me show you how..."
+    },
+    {
+      "title": "97 Mentality",
+      "album": "The Swarm",
+      "url": "https://genius.com/Cappadonna-97-mentality-lyrics",
+      "lyrics": "97 mentality, reality, fatality\nCappadonna's strategy, always bringin' the heat..."
+    },
+    {
+      "title": "Heaterz",
+      "album": "Wu-Tang Forever",
+      "url": "https://genius.com/Wu-tang-clan-heaterz-lyrics",
+      "lyrics": "Heaterz, bring the fire, Cappadonna never tire\nWu-Tang Clan forever, always aiming higher..."
+    }
+  ]
+}

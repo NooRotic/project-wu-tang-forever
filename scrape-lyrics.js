@@ -145,6 +145,8 @@ async function main() {
   const dataDir = './data/artist/wu-tang-clan';
   const jsonFile = `${dataDir}/wu-tang-clan-lyrics.json`;
   const tmpFile = `${dataDir}/wu-tang-clan-lyrics.tmp.json`;
+  // Ensure directory exists before writing
+  fs.mkdirSync(dataDir, { recursive: true });
   if (clear) {
     try {
       fs.unlinkSync(jsonFile);

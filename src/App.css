@@ -1,42 +1,139 @@
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.wutang-logo {
+  height: 70px;
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  filter: drop-shadow(0 0 2em #F8D00088);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+h1 {
+  color: #F8D000;
+  font-family: 'Oswald', Impact, Arial Black, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 #000, 4px 4px 8px #000a;
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5em;
+  background: #111;
+  border-bottom: 2px solid #F8D000;
+  padding: 0.5em 1.5em;
+  margin-bottom: 1.5em;
+}
+.nav-link {
+  color: #F8D000;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1em;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.nav-link:hover {
+  color: #fff200;
+}
+h2, h3, h4, h5, h6 {
+  color: #fff;
+  font-family: 'Oswald', Impact, Arial Black, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 900;
+  text-shadow: 2px 2px 0 #000, 4px 4px 8px #000a;
+}
+
+.song-title {
+  color: #F8D000;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-shadow: 2px 2px 0 #000, 4px 4px 8px #000a;
+  cursor: pointer;
+  text-align: left;
+}
+
+.song-title:hover {
+  color: #fff200;
+}
+
+.verse-type {
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+  text-shadow: 1px 1px 0 #000, 2px 2px 8px #000a;
+}
+
+.verse-artists {
+  color: #fff;
+  font-weight: normal;
+  margin-left: 0.5em;
+  text-shadow: 1px 1px 0 #000, 2px 2px 8px #000a;
 }
 
 .card {
+  background: #111;
+  border: 2px solid #F8D000;
+  border-radius: 18px;
   padding: 2em;
+  margin: 2em auto;
+  color: #fff;
+  box-shadow: 0 4px 24px 0 #000a;
+  max-width: 600px;
+}
+
+button {
+  background: #F8D000;
+  color: #000;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8em 2em;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1em;
+  box-shadow: 0 2px 8px 0 #0005;
+  transition: background 0.2s, color 0.2s;
+}
+button:hover {
+  background: #000;
+  color: #F8D000;
+  border: 2px solid #F8D000;
+}
+
+a {
+  color: #F8D000;
+  text-decoration: none;
+  font-weight: bold;
+}
+a:hover {
+  color: #fff200;
+  text-shadow: 0 0 8px #F8D00088;
 }
 
 .read-the-docs {
-  color: #888;
+  color: #F8D000;
+  opacity: 0.7;
 }
