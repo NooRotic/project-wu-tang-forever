@@ -7,9 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scrape-lyrics": "node scrape-lyrics.js",
+    "scrape:chunk1": "node scrape-lyrics.js --chunk-size 25 --offset 0",
+    "scrape:chunk2": "node scrape-lyrics.js --chunk-size 25 --offset 25",
+    "scrape:chunk3": "node scrape-lyrics.js --chunk-size 25 --offset 50"
   },
   "dependencies": {
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
