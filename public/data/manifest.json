@@ -1,0 +1,13 @@
+{
+  "artists": [
+    {
+      "slug": "wu-tang-clan",
+      "name": "Wu-Tang Clan",
+      "type": "group",
+      "primaryColor": "#F8D000",
+      "logo": "/data/artists/wu-tang-clan/logo.png",
+      "albumCount": 21,
+      "songCount": 249
+    }
+  ]
+}

@@ -1,4 +1,13 @@
 :root {
+  --color-primary: #F8D000;
+  --color-primary-hover: #fff200;
+  --color-primary-glow: #F8D00088;
+  --color-primary-faint: #F8D00044;
+  --color-bg: #000;
+  --color-bg-card: #111;
+  --color-text: #fff;
+  --font-heading: 'Oswald', Impact, Arial Black, Arial, sans-serif;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

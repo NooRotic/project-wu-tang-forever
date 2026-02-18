@@ -1,0 +1,28 @@
+{
+  "slug": "wu-tang-clan",
+  "name": "Wu-Tang Clan",
+  "type": "group",
+  "geniusSlug": "Wu-tang-clan",
+  "theme": {
+    "primaryColor": "#F8D000",
+    "primaryColorHover": "#fff200",
+    "headerFont": "'Oswald', Impact, Arial Black, Arial, sans-serif",
+    "logo": "/data/artists/wu-tang-clan/logo.png"
+  },
+  "members": [
+    { "name": "RZA", "slug": "rza", "color": "#F8D000", "aliases": [], "wiki": "https://en.wikipedia.org/wiki/RZA" },
+    { "name": "GZA", "slug": "gza", "color": "#BADA55", "aliases": ["The Genius"], "wiki": "https://en.wikipedia.org/wiki/GZA" },
+    { "name": "Ol' Dirty Bastard", "slug": "ol-dirty-bastard", "color": "#E67E22", "aliases": ["ODB", "Ol Dirty Bastard", "O.D.B."], "wiki": "https://en.wikipedia.org/wiki/Ol%27_Dirty_Bastard" },
+    { "name": "Method Man", "slug": "method-man", "color": "#1ABC9C", "aliases": ["Meth", "Johnny Blaze"], "wiki": "https://en.wikipedia.org/wiki/Method_Man" },
+    { "name": "Raekwon", "slug": "raekwon", "color": "#9B59B6", "aliases": ["The Chef"], "wiki": "https://en.wikipedia.org/wiki/Raekwon" },
+    { "name": "Ghostface Killah", "slug": "ghostface-killah", "color": "#E74C3C", "aliases": ["Tony Starks", "Ghostface"], "wiki": "https://en.wikipedia.org/wiki/Ghostface_Killah" },
+    { "name": "Inspectah Deck", "slug": "inspectah-deck", "color": "#2980B9", "aliases": ["Rebel INS", "INS"], "wiki": "https://en.wikipedia.org/wiki/Inspectah_Deck" },
+    { "name": "U-God", "slug": "u-god", "color": "#F39C12", "aliases": ["Baby U"], "wiki": "https://en.wikipedia.org/wiki/U-God" },
+    { "name": "Masta Killa", "slug": "masta-killa", "color": "#27AE60", "aliases": [], "wiki": "https://en.wikipedia.org/wiki/Masta_Killa" },
+    { "name": "Cappadonna", "slug": "cappadonna", "color": "#8E44AD", "aliases": ["Cappachino"], "wiki": "https://en.wikipedia.org/wiki/Cappadonna" }
+  ],
+  "tagline": "Wu-Tang is for the children.",
+  "disclaimer": "Tribute project — Not affiliated with Wu-Tang Clan or Genius.com",
+  "bioTitle": "Wu-Tang Clan: The Living Legacy",
+  "dashboardTitle": "Wu-Tang Dashboard"
+}
