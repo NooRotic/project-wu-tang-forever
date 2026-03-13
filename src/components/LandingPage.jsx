@@ -14,7 +14,7 @@ function AboutModal({ onClose }) {
         <button className="modal-close" onClick={onClose} aria-label="Close">&times;</button>
         <h2 style={{ marginTop: 0 }}>What is this?</h2>
         <p>
-          <strong>Lyrics Explorer</strong> is a fan-built tool for browsing and analysing rap lyrics.
+          <strong>Word Explorer</strong> is a fan-built tool for browsing and analysing rap lyrics.
           It scrapes lyrics and metadata from <a href="https://genius.com" target="_blank" rel="noopener noreferrer">Genius.com</a> and
           presents them in a searchable, stats-driven interface.
         </p>
@@ -60,29 +60,64 @@ function LandingPage({ onSelectArtist }) {
 
   useEffect(() => { fetchArtists(); }, []);
 
+  const isSolo = !loading && artists.length === 1;
+  const artist = isSolo ? artists[0] : null;
+
   return (
     <div className="landing-page">
-      <h1>Lyrics Explorer</h1>
-      <p style={{ color: '#aaa', marginBottom: '0.6em' }}>Select an artist to explore their lyrics and vocabulary.</p>
-      <button className="about-link" onClick={() => setShowAbout(true)}>What is this?</button>
-      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
-      {loading && <div style={{ marginTop: '2em' }}>Loading artists...</div>}
-      <div className="artist-grid">
-        {artists.map(a => (
-          <div
-            key={a.slug}
-            className="artist-card"
-            style={{ borderColor: a.primaryColor }}
-            onClick={() => onSelectArtist(a.slug)}
+      {isSolo ? (
+        <div className="landing-hero">
+          {artist.logo && (
+            <img
+              src={artist.logo}
+              alt={artist.name}
+              className="landing-hero-logo"
+              style={{ filter: `drop-shadow(0 0 24px ${artist.primaryColor}88)` }}
+            />
+          )}
+          <h1 className="landing-hero-title" style={{ color: artist.primaryColor }}>
+            {artist.name}
+          </h1>
+          <p className="landing-hero-subtitle">Word Explorer</p>
+          <p className="landing-hero-desc">
+            Explore the full discography — browse lyrics, dig into member stats,
+            and search every word across the catalogue.
+          </p>
+          <button
+            className="landing-enter-btn"
+            style={{ background: artist.primaryColor, boxShadow: `0 0 24px ${artist.primaryColor}66` }}
+            onClick={() => onSelectArtist(artist.slug)}
           >
-            {a.logo && <img src={a.logo} alt={a.name} className="artist-card-logo" style={{ filter: `drop-shadow(0 0 8px ${a.primaryColor}88)` }} />}
-            <div className="artist-card-name" style={{ color: a.primaryColor }}>{a.name}</div>
-            <div className="artist-card-stats">
-              {a.albumCount} albums &middot; {a.songCount} songs
-            </div>
+            Enter
+          </button>
+          <button className="about-link" onClick={() => setShowAbout(true)}>What is this?</button>
+        </div>
+      ) : (
+        <>
+          <h1>Word Explorer</h1>
+          <p style={{ color: '#aaa', marginBottom: '0.6em' }}>Choose an artist to explore their lyrics and vocabulary.</p>
+          <button className="about-link" onClick={() => setShowAbout(true)}>What is this?</button>
+          {loading && <div style={{ marginTop: '2em' }}>Loading artists...</div>}
+          <div className="artist-grid">
+            {artists.map(a => (
+              <div
+                key={a.slug}
+                className="artist-card"
+                style={{ borderColor: a.primaryColor }}
+                onClick={() => onSelectArtist(a.slug)}
+              >
+                {a.logo && <img src={a.logo} alt={a.name} className="artist-card-logo" style={{ filter: `drop-shadow(0 0 8px ${a.primaryColor}88)` }} />}
+                <div className="artist-card-name" style={{ color: a.primaryColor }}>{a.name}</div>
+                <div className="artist-card-stats">
+                  {a.albumCount} albums &middot; {a.songCount} songs
+                </div>
+                <div className="artist-card-enter" style={{ color: a.primaryColor }}>Enter →</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       {import.meta.env.DEV && <DevToolbar onArtistAdded={fetchArtists} />}
     </div>
   );

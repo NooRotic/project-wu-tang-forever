@@ -26,12 +26,12 @@ describe('applyTheme', () => {
 
   it('sets document title with artist name', () => {
     applyTheme({ name: 'Wu-Tang Clan', theme: { primaryColor: '#F8D000' } });
-    expect(document.title).toBe('Wu-Tang Clan Lyrics Explorer');
+    expect(document.title).toBe('Wu-Tang Clan Word Explorer');
   });
 
   it('sets default document title when name is empty', () => {
     applyTheme({ name: '', theme: { primaryColor: '#F8D000' } });
-    expect(document.title).toBe('Lyrics Explorer');
+    expect(document.title).toBe('Word Explorer');
   });
 
   it('does nothing when config is null', () => {
@@ -63,14 +63,14 @@ describe('resetTheme', () => {
   });
 
   it('resets document title', () => {
-    document.title = 'Wu-Tang Clan — Lyrics Explorer';
+    document.title = 'Wu-Tang Clan — Word Explorer';
     resetTheme();
-    expect(document.title).toBe('Lyrics Explorer');
+    expect(document.title).toBe('Word Explorer');
   });
 
   it('is safe to call multiple times', () => {
     resetTheme();
     resetTheme();
-    expect(document.title).toBe('Lyrics Explorer');
+    expect(document.title).toBe('Word Explorer');
   });
 });

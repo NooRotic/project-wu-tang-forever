@@ -9,7 +9,7 @@ export function applyTheme(config) {
   }
   if (t.primaryColorHover) root.style.setProperty('--color-primary-hover', t.primaryColorHover);
   if (t.headerFont) root.style.setProperty('--font-heading', t.headerFont);
-  document.title = config.name ? `${config.name} Lyrics Explorer` : 'Lyrics Explorer';
+  document.title = config.name ? `${config.name} Word Explorer` : 'Word Explorer';
 }
 
 export function resetTheme() {
@@ -19,5 +19,5 @@ export function resetTheme() {
   root.style.removeProperty('--color-primary-glow');
   root.style.removeProperty('--color-primary-faint');
   root.style.removeProperty('--font-heading');
-  document.title = 'Lyrics Explorer';
+  document.title = 'Word Explorer';
 }
