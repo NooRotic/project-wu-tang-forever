@@ -6,6 +6,7 @@ import 'dotenv/config';
 import axios from 'axios';
 import { exec } from 'child_process';
 import fs from 'fs';
+import path from 'path';
 import process from 'process';
 
 const GENIUS_API_BASE = 'https://api.genius.com';
@@ -106,6 +107,66 @@ export default function devApiPlugin() {
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: !err, stdout, stderr, error: err?.message }));
           });
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: err.message }));
+        }
+      });
+
+      // Update a member's image — downloads external URLs or saves base64 file uploads locally
+      // Body: { artistSlug, memberSlug, imageUrl?, imageBase64?, imageExt? }
+      // imageUrl: external URL (will be downloaded) or local /data/... path (stored as-is)
+      // imageBase64 + imageExt: raw file upload from the browser
+      server.middlewares.use('/api/update-member-image', async (req, res) => {
+        if (req.method !== 'POST') {
+          res.writeHead(405, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'POST only' }));
+          return;
+        }
+        try {
+          const { artistSlug, memberSlug, imageUrl, imageBase64, imageExt } = await readBody(req);
+          if (!artistSlug || !memberSlug) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Missing artistSlug or memberSlug' }));
+            return;
+          }
+          const memberPath = `./public/data/artists/${artistSlug}/members/${memberSlug}.json`;
+          if (!fs.existsSync(memberPath)) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Member file not found' }));
+            return;
+          }
+          const membersDir = `./public/data/artists/${artistSlug}/members`;
+
+          let localPath = null;
+
+          if (imageBase64 && imageExt) {
+            // File uploaded from browser — save base64 bytes to disk
+            const filename = `${memberSlug}.${imageExt}`;
+            fs.writeFileSync(path.join(membersDir, filename), Buffer.from(imageBase64, 'base64'));
+            localPath = `/data/artists/${artistSlug}/members/${filename}`;
+          } else if (imageUrl && /^https?:\/\//.test(imageUrl)) {
+            // External URL — download and cache locally
+            const imgRes = await axios.get(imageUrl, { responseType: 'arraybuffer', timeout: 15000 });
+            const ct = imgRes.headers['content-type'] || '';
+            const ext = ct.includes('png') ? 'png' : ct.includes('webp') ? 'webp' : 'jpg';
+            const filename = `${memberSlug}.${ext}`;
+            fs.writeFileSync(path.join(membersDir, filename), Buffer.from(imgRes.data));
+            localPath = `/data/artists/${artistSlug}/members/${filename}`;
+          } else if (imageUrl) {
+            // Already a local /data/... path — store as-is
+            localPath = imageUrl;
+          }
+
+          const data = JSON.parse(fs.readFileSync(memberPath, 'utf8'));
+          if (localPath) {
+            data.image = localPath;
+          } else {
+            delete data.image;
+          }
+          fs.writeFileSync(memberPath, JSON.stringify(data, null, 2));
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, localPath }));
         } catch (err) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: err.message }));

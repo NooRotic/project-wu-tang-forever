@@ -14,6 +14,7 @@
     "scrape:wu-tang:chunk2": "node scrape-lyrics.js --artist \"Wu-Tang Clan\" --slug Wu-tang-clan --chunk-size 25 --offset 25",
     "scrape:wu-tang:chunk3": "node scrape-lyrics.js --artist \"Wu-Tang Clan\" --slug Wu-tang-clan --chunk-size 25 --offset 50",
     "enrich:wu-tang": "node scrape-lyrics.js --artist \"Wu-Tang Clan\" --slug Wu-tang-clan --enrich-only",
+    "enrich:member-images": "node scripts/enrich-member-images.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "build:artists": "node scripts/build-artists.js"

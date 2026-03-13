@@ -27,6 +27,12 @@ export default defineConfig([
     },
   },
   {
+    files: ['scripts/**/*.js', 'scrape-lyrics.js', 'vite-plugin-dev-api.js', 'vitest.config.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
     files: ['**/*.test.{js,jsx}'],
     languageOptions: {
       globals: {

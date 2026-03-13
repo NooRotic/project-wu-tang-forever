@@ -1,13 +1,17 @@
 {
   "name": "Cappadonna",
-  "akas": ["Cappachino", "CappaDon", "Poppy Wardrobe"],
+  "akas": [
+    "Cappachino",
+    "CappaDon",
+    "Poppy Wardrobe"
+  ],
   "bio": "Cappadonna (Darryl Hill) is an American rapper and official member of the Wu-Tang Clan, known for his energetic delivery, streetwise lyrics, and colorful wardrobe. He debuted on Raekwon's 'Ice Cream' and has contributed to many Wu-Tang and solo projects.",
   "facts": [
     "Featured on classic Wu-Tang tracks like 'Winter Warz' and 'Triumph'.",
     "'Cappadonna' is an acronym: 'Consider All Poor People Acceptable Don’t Oppress Nor Neglect Anyone.'",
     "Known for his fashion references and unique slang.",
-    "Mentored by U-God before joining Wu-Tang Clan."
-    ,"Cappadonna was originally set to be a core Wu-Tang member, but went to prison before the group's debut album was recorded, leading to Method Man taking his place.",
+    "Mentored by U-God before joining Wu-Tang Clan.",
+    "Cappadonna was originally set to be a core Wu-Tang member, but went to prison before the group's debut album was recorded, leading to Method Man taking his place.",
     "He made his first major appearance on Raekwon's 'Ice Cream' and Ghostface Killah's 'Ironman' before officially joining the Clan.",
     "Cappadonna is known for recording some verses in a single take, including his legendary 'Winter Warz' verse.",
     "He has a reputation for referencing high-end fashion brands and has called himself 'Poppy Wardrobe' in his lyrics.",
@@ -15,19 +19,63 @@
     "He is a member of Theodore Unit, a group founded by Ghostface Killah."
   ],
   "wikipedia": "https://en.wikipedia.org/wiki/Cappadonna",
-  "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Cappadonna_Pitchfork_2007.jpg",
+  "image": "/data/artists/wu-tang-clan/members/cappadonna.jpg",
   "albums": [
-    {"title": "The Pillage", "year": 1998, "url": "https://en.wikipedia.org/wiki/The_Pillage"},
-    {"title": "The Yin and the Yang", "year": 2001, "url": "https://en.wikipedia.org/wiki/The_Yin_and_the_Yang"},
-    {"title": "The Struggle", "year": 2003, "url": "https://en.wikipedia.org/wiki/The_Struggle_(Cappadonna_album)"},
-    {"title": "The Cappatilize Project", "year": 2008, "url": "https://en.wikipedia.org/wiki/The_Cappatilize_Project"},
-    {"title": "Slang Prostitution", "year": 2009, "url": "https://en.wikipedia.org/wiki/Slang_Prostitution"},
-    {"title": "The Pilgrimage", "year": 2011, "url": "https://en.wikipedia.org/wiki/The_Pilgrimage_(album)"},
-    {"title": "Eyrth, Wynd and Fyre", "year": 2013, "url": "https://en.wikipedia.org/wiki/Eyrth,_Wynd_and_Fyre"},
-    {"title": "The Pillage 2", "year": 2015, "url": "https://en.wikipedia.org/wiki/The_Pillage"},
-    {"title": "Ear Candy", "year": 2018, "url": "https://www.glfent.com/product-page/ear-candy"},
-    {"title": "Black Is Beautiful", "year": 2020, "url": "https://music.apple.com/us/album/black-is-beautiful/1519440732"},
-    {"title": "Godly, Wealthy & Beautiful", "year": 2025, "url": "https://music.apple.com/us/album/godly-wealthy-beautiful/1731234567"}
+    {
+      "title": "The Pillage",
+      "year": 1998,
+      "url": "https://en.wikipedia.org/wiki/The_Pillage"
+    },
+    {
+      "title": "The Yin and the Yang",
+      "year": 2001,
+      "url": "https://en.wikipedia.org/wiki/The_Yin_and_the_Yang"
+    },
+    {
+      "title": "The Struggle",
+      "year": 2003,
+      "url": "https://en.wikipedia.org/wiki/The_Struggle_(Cappadonna_album)"
+    },
+    {
+      "title": "The Cappatilize Project",
+      "year": 2008,
+      "url": "https://en.wikipedia.org/wiki/The_Cappatilize_Project"
+    },
+    {
+      "title": "Slang Prostitution",
+      "year": 2009,
+      "url": "https://en.wikipedia.org/wiki/Slang_Prostitution"
+    },
+    {
+      "title": "The Pilgrimage",
+      "year": 2011,
+      "url": "https://en.wikipedia.org/wiki/The_Pilgrimage_(album)"
+    },
+    {
+      "title": "Eyrth, Wynd and Fyre",
+      "year": 2013,
+      "url": "https://en.wikipedia.org/wiki/Eyrth,_Wynd_and_Fyre"
+    },
+    {
+      "title": "The Pillage 2",
+      "year": 2015,
+      "url": "https://en.wikipedia.org/wiki/The_Pillage"
+    },
+    {
+      "title": "Ear Candy",
+      "year": 2018,
+      "url": "https://www.glfent.com/product-page/ear-candy"
+    },
+    {
+      "title": "Black Is Beautiful",
+      "year": 2020,
+      "url": "https://music.apple.com/us/album/black-is-beautiful/1519440732"
+    },
+    {
+      "title": "Godly, Wealthy & Beautiful",
+      "year": 2025,
+      "url": "https://music.apple.com/us/album/godly-wealthy-beautiful/1731234567"
+    }
   ],
   "songs": [
     {
