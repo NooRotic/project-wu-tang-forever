@@ -223,6 +223,17 @@ npm run build:artists -- wu-tang-clan kendrick-lamar
 
 This builds the full app to `dist/` then removes unselected artist directories and rewrites `manifest.json` to match. Upload the `dist/` folder to any static host.
 
+### CI/CD — Auto-deploy on push
+
+The repo includes a GitHub Actions workflow (`.github/workflows/`) configured for [IONOS Deploy Now](https://docs.ionos.space/docs/). Every push to `main` triggers an automated build and deployment — no manual uploads required.
+
+**Workflow steps:**
+1. `npm ci` — install dependencies
+2. `npm run build` — Vite production build
+3. IONOS Deploy Now artifact action uploads `dist/` to the configured webspace
+
+To use with your own IONOS account, add `IONOS_API_KEY` and `IONOS_SSH_KEY` as GitHub repository secrets and update the `project-id` in the orchestration workflow.
+
 ---
 
 ## Project Structure
