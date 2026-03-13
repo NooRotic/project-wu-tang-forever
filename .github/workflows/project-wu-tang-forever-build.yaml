@@ -17,7 +17,7 @@ env:
   DEPLOYMENT_FOLDER: dist
 
 jobs:
-# Please do not rename this job
+  # Please do not rename this job
   build-project:
     name: build project-wu-tang-forever
     runs-on: ubuntu-latest
@@ -25,18 +25,20 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Run script
-# uncomment the following lines if you want to add environment variables for this step
-#        env:
-#          MY_ENV_VAR: value-for-my-env-var
-#          MY_SECRET_ENV_VAR: ${{ secrets.MY_SECRET }} # here you can find information how to create secrets: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+        # uncomment the following lines if you want to add environment variables for this step
+        #        env:
+        #          MY_ENV_VAR: value-for-my-env-var
+        #          MY_SECRET_ENV_VAR: ${{ secrets.MY_SECRET }} # here you can find information how to create secrets: https://docs.github.com/en/actions/security-guides/encrypted-secrets
         run: |
-          npm run ci
           npm run build
 
-# Please do not touch the following action
+      # Please do not touch the following action
       - name: Store deployment content
         uses: ionos-deploy-now/artifact-action@v1
         with:
