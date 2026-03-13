@@ -1,8 +1,10 @@
-# Lyrics Explorer
+# Word Explorer
 
 A multi-artist web app for scraping, browsing, and deep-diving into lyrics from Genius.com. Built with Vite + React. Deploys as a fully static site — no backend required.
 
 Originally built around Wu-Tang Clan. Supports any artist or group with per-artist theming via JSON config.
+
+**Live:** [wu-tang-wisdom.nooroticx.tv](https://wu-tang-wisdom.nooroticx.tv)
 
 ![Landing page](docs/screenshots/01-landing.png)
 
@@ -10,6 +12,7 @@ Originally built around Wu-Tang Clan. Supports any artist or group with per-arti
 
 ## Features
 
+- **Single-artist hero landing** — when deployed with one artist, the landing page shows a full-screen welcome with the artist logo, name, and a styled "Enter" button; multi-artist deployments show a card grid
 - **Scrape any artist** from Genius.com via CLI or in-browser dev tools
 - **Browse albums and songs** with cover art, Genius view counts, release dates, and credits
 - **Member dashboard** — per-member stats: song counts, total bars, max bars, avg bars/song, unique vocabulary, solo verses, and total Genius views
@@ -228,7 +231,7 @@ This builds the full app to `dist/` then removes unselected artist directories a
 The repo includes a GitHub Actions workflow (`.github/workflows/`) configured for [IONOS Deploy Now](https://docs.ionos.space/docs/). Every push to `main` triggers an automated build and deployment — no manual uploads required.
 
 **Workflow steps:**
-1. `npm ci` — install dependencies
+1. `npm install` — install dependencies
 2. `npm run build` — Vite production build
 3. IONOS Deploy Now artifact action uploads `dist/` to the configured webspace
 

@@ -4,9 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Lyrics Explorer — a multi-artist Vite + React platform for browsing and displaying scraped Genius.com lyrics data. Supports any musical artist or group with per-artist theming via JSON config files. Includes a generalized Node.js scraper and dev-mode tools for searching/adding new artists. Deploys as a fully static site.
+**Word Explorer** — a multi-artist Vite + React platform for browsing and analysing scraped Genius.com lyrics data. Supports any musical artist or group with per-artist theming via JSON config files. Includes a generalized Node.js scraper and dev-mode tools for searching/adding new artists. Deploys as a fully static site.
 
-Wu-Tang Clan is the original and primary artist template.
+Wu-Tang Clan is the original and primary artist template. Live at **https://wu-tang-wisdom.nooroticx.tv** — public repo at **https://github.com/NooRotic/project-wu-tang-forever**.
+
+CI/CD: GitHub Actions + IONOS Deploy Now. Every push to `main` auto-builds and deploys. No manual uploads.
 
 ## Commands
 
@@ -79,15 +81,15 @@ The scraper auto-generates a config template for new artists, detecting group vs
 ### Frontend (src/)
 
 - **App.jsx** — Lightweight router: switches between LandingPage and ArtistView based on `selectedArtist` state.
-- **components/LandingPage.jsx** — Fetches `manifest.json`, renders artist card grid. Includes "What is this?" About modal. In dev mode, shows DevToolbar for search/scrape.
-- **components/ArtistView.jsx** — Main artist experience. Loads config + lyrics via `useArtistData` hook, applies theme. Three views: albums, dashboard (member stats + multi-word frequency search), member appearances.
+- **components/LandingPage.jsx** — Fetches `manifest.json`. When manifest has **one artist**, renders a full-screen hero with the artist logo, name, "Word Explorer" subtitle, welcoming description, and a styled "Enter" button. When manifest has **multiple artists**, renders a card grid with an "Enter →" label per card. Both modes include the "What is this?" About modal. In dev mode, shows DevToolbar for search/scrape.
+- **components/ArtistView.jsx** — Main artist experience. Loads config + lyrics via `useArtistData` hook, applies theme. Three views: albums (with intro copy and dashboard link for groups), dashboard (member stats + multi-word frequency search with sortable columns and top-3 spotlight), member appearances.
 - **components/ArtistBio.jsx** — Biography with radial member tree (groups) or simple bio (solo). Loads member bios and photos from `/data/artists/{slug}/members/`. `MemberCircle` renders circle-masked photos with `object-fit: cover`. In dev mode (`import.meta.env.DEV`), shows a ✎ edit button per member that allows pasting a URL (auto-downloaded server-side) or uploading a local file.
 - **components/DevToolbar.jsx** — Dev-only: searches Genius.com via `/api/search`, triggers scraping via `/api/scrape`. Tree-shaken out of production builds.
 
 ### Hooks
 
 - **useArtistData(slug)** — Fetches `config.json` + `lyrics.json` in parallel. Returns `{ config, data, loading, error }`.
-- **useTheme** — `applyTheme(config)` sets CSS variables on `:root` from config.theme. `resetTheme()` clears them. Updates document title to `{Artist Name} Lyrics Explorer`.
+- **useTheme** — `applyTheme(config)` sets CSS variables on `:root` from config.theme. `resetTheme()` clears them. Updates document title to `{Artist Name} Word Explorer`.
 
 ### Utils (src/utils/artistUtils.js)
 
