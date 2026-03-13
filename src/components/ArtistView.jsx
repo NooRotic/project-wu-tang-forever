@@ -7,8 +7,9 @@ import ArtistBio from './ArtistBio';
 function ArtistView({ slug, segments, navigate, onBack }) {
   const { config, data, loading, error } = useArtistData(slug);
 
-  const [wordQuery, setWordQuery] = useState('');
-  const [wordStats, setWordStats] = useState({});
+  const [pendingWord, setPendingWord] = useState('');
+  const [activeWords, setActiveWords] = useState([]);
+  const [wordStats, setWordStats] = useState([]);
   const [expandedSongs, setExpandedSongs] = useState({});
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState('desc');
@@ -104,12 +105,19 @@ function ArtistView({ slug, segments, navigate, onBack }) {
     return byAlbum;
   };
 
-  // Update wordStats when wordQuery changes
+  const addWord = () => {
+    const w = pendingWord.trim().toLowerCase();
+    if (w && !activeWords.includes(w)) setActiveWords(prev => [...prev, w]);
+    setPendingWord('');
+  };
+
+  const removeWord = (word) => setActiveWords(prev => prev.filter(w => w !== word));
+
   useEffect(() => {
     if (!data || !isGroup) return;
-    setWordStats(getDashboardStats(data.albums, members, wordQuery));
+    setWordStats(getDashboardStats(data.albums, members, activeWords));
     // eslint-disable-next-line
-  }, [data, wordQuery]);
+  }, [data, activeWords]);
 
   if (loading) return <div style={{ textAlign: 'center', padding: '4em', color: '#aaa' }}>Loading...</div>;
   if (error) return <div style={{ textAlign: 'center', padding: '4em', color: '#f44' }}>Error: {error}</div>;
@@ -128,68 +136,116 @@ function ArtistView({ slug, segments, navigate, onBack }) {
       ) : showDashboard && isGroup ? (
         <div className="card">
           <h2>{config?.dashboardTitle || 'Dashboard'}</h2>
-          <div style={{ margin: '1em 0', textAlign: 'left' }}>
-            <label htmlFor="wordQuery" style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>Word Frequency:</label>
+
+          {/* Word frequency input */}
+          <div style={{ margin: '1em 0', textAlign: 'left', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5em' }}>
+            <label style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>Word Frequency:</label>
             <input
-              id="wordQuery"
               type="text"
-              value={wordQuery}
-              onChange={e => setWordQuery(e.target.value)}
-              placeholder="Enter word (e.g. cream, sword)"
-              style={{ marginLeft: 8, padding: '0.3em 0.8em', borderRadius: 8, border: '1px solid var(--color-primary)', background: '#222', color: '#fff', fontSize: '1em' }}
+              value={pendingWord}
+              onChange={e => setPendingWord(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') addWord(); }}
+              placeholder="e.g. cream, sword"
+              style={{ padding: '0.3em 0.8em', borderRadius: 8, border: '1px solid var(--color-primary)', background: '#222', color: '#fff', fontSize: '1em', width: 180 }}
             />
+            <button
+              onClick={addWord}
+              style={{ padding: '0.3em 1em', fontSize: '0.9em', marginTop: 0 }}
+            >Add</button>
           </div>
+
+          {/* Top 3 spotlight — shown when 3+ members and at least one active word */}
+          {activeWords.length > 0 && members.length >= 3 && wordStats.length > 0 && (
+            <div style={{ margin: '0.5em 0 1.2em', display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
+              {activeWords.map(word => {
+                const top3 = [...wordStats]
+                  .sort((a, b) => (b.wordCounts?.[word] || 0) - (a.wordCounts?.[word] || 0))
+                  .slice(0, 3)
+                  .filter(s => (s.wordCounts?.[word] || 0) > 0);
+                if (top3.length === 0) return null;
+                return (
+                  <div key={word} style={{ background: '#1a1a1a', border: '1px solid var(--color-primary-faint)', borderRadius: 10, padding: '0.5em 1em', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.8em' }}>
+                    <span style={{ color: 'var(--color-primary)', fontWeight: 'bold', fontSize: '0.85em', textTransform: 'uppercase', letterSpacing: 1 }}>
+                      Top 3 &ldquo;{word}&rdquo;:
+                    </span>
+                    {top3.map((s, i) => (
+                      <span key={s.name} style={{ color: '#fff', fontSize: '0.9em' }}>
+                        <span style={{ color: 'var(--color-primary)', fontWeight: 'bold' }}>{i + 1}. {s.name}</span>
+                        <span style={{ color: '#aaa', marginLeft: 4 }}>({s.wordCounts[word]})</span>
+                      </span>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <div style={{ overflowX: 'auto' }}>
             {(() => {
-              const thStyle = { padding: '0.5em', borderBottom: '2px solid var(--color-primary)', cursor: 'pointer', userSelect: 'none' };
+              const thStyle = { padding: '0.5em', borderBottom: '2px solid var(--color-primary)', cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' };
+              const wordThStyle = { ...thStyle, color: 'var(--color-primary)', background: '#1a1200' };
               const handleSort = (col) => {
                 if (sortCol === col) setSortDir(d => d === 'desc' ? 'asc' : 'desc');
                 else { setSortCol(col); setSortDir('desc'); }
               };
-              const arrow = (col) => sortCol === col ? (sortDir === 'desc' ? ' \u25BC' : ' \u25B2') : '';
-              const sorted = wordStats && wordStats.slice ? [...wordStats].sort((a, b) => {
+              const getVal = (stat, col) => col.startsWith('word:') ? (stat.wordCounts?.[col.slice(5)] || 0) : stat[col];
+              const arrow = (col) => sortCol === col ? (sortDir === 'desc' ? ' ▼' : ' ▲') : '';
+              const sorted = wordStats.length ? [...wordStats].sort((a, b) => {
                 if (!sortCol) return 0;
-                const av = a[sortCol], bv = b[sortCol];
+                const av = getVal(a, sortCol), bv = getVal(b, sortCol);
                 if (typeof av === 'string') return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
                 return sortDir === 'asc' ? av - bv : bv - av;
               }) : wordStats;
               return (
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1em' }}>
-              <thead>
-                <tr style={{ background: '#222', color: 'var(--color-primary)' }}>
-                  <th style={thStyle} onClick={() => handleSort('name')}>Member{arrow('name')}</th>
-                  <th style={thStyle} onClick={() => handleSort('albums')}>Albums{arrow('albums')}</th>
-                  <th style={thStyle} onClick={() => handleSort('songs')}>Songs{arrow('songs')}</th>
-                  <th style={thStyle} onClick={() => handleSort('totalBars')}>Total Bars{arrow('totalBars')}</th>
-                  <th style={thStyle} onClick={() => handleSort('maxBars')}>Max Bars{arrow('maxBars')}</th>
-                  <th style={thStyle} onClick={() => handleSort('avgBars')}>Avg Bars/Song{arrow('avgBars')}</th>
-                  <th style={thStyle} onClick={() => handleSort('uniqueWords')}>Unique Words{arrow('uniqueWords')}</th>
-                  <th style={thStyle} onClick={() => handleSort('soloVerses')}>Solo Verses{arrow('soloVerses')}</th>
-                  <th style={thStyle} onClick={() => handleSort('totalViews')}>Total Views{arrow('totalViews')}</th>
-                  <th style={thStyle} onClick={() => handleSort('charCount')}>Characters{arrow('charCount')}</th>
-                  {wordQuery && <th style={thStyle} onClick={() => handleSort('wordCount')}>"{wordQuery}" Count{arrow('wordCount')}</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {sorted && sorted.map && sorted.map((stat, idx) => (
-                  <tr key={stat.name} style={{ background: idx % 2 === 0 ? '#181818' : '#222' }}>
-                    <td style={{ color: 'var(--color-primary)', fontWeight: 'bold', padding: '0.5em', textShadow: '2px 2px 0 #000, 4px 4px 8px #000a', cursor: 'pointer', textDecoration: 'underline', whiteSpace: 'nowrap' }}
-                      onClick={() => { nav.member(stat.name); setExpandedSongs({}); }}
-                    >{stat.name}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.albums}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.songs}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.totalBars}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.maxBars}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.avgBars}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.uniqueWords.toLocaleString()}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.soloVerses}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.totalViews ? stat.totalViews.toLocaleString() : '—'}</td>
-                    <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.charCount.toLocaleString()}</td>
-                    {wordQuery && <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.wordCount}</td>}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5em' }}>
+                  <thead>
+                    <tr style={{ background: '#222', color: 'var(--color-primary)' }}>
+                      <th style={thStyle} onClick={() => handleSort('name')}>Member{arrow('name')}</th>
+                      {activeWords.map(word => (
+                        <th key={word} style={wordThStyle} onClick={() => handleSort(`word:${word}`)}>
+                          &ldquo;{word}&rdquo;{arrow(`word:${word}`)}
+                          <button
+                            onClick={e => { e.stopPropagation(); removeWord(word); }}
+                            title={`Remove "${word}"`}
+                            style={{ marginLeft: 6, padding: '0 4px', fontSize: '0.75em', background: 'none', border: '1px solid #555', borderRadius: 4, color: '#888', cursor: 'pointer', marginTop: 0, lineHeight: '1.4', fontWeight: 'normal', textTransform: 'none', letterSpacing: 0 }}
+                          >&times;</button>
+                        </th>
+                      ))}
+                      <th style={thStyle} onClick={() => handleSort('albums')}>Albums{arrow('albums')}</th>
+                      <th style={thStyle} onClick={() => handleSort('songs')}>Songs{arrow('songs')}</th>
+                      <th style={thStyle} onClick={() => handleSort('totalBars')}>Total Bars{arrow('totalBars')}</th>
+                      <th style={thStyle} onClick={() => handleSort('maxBars')}>Max Bars{arrow('maxBars')}</th>
+                      <th style={thStyle} onClick={() => handleSort('avgBars')}>Avg Bars/Song{arrow('avgBars')}</th>
+                      <th style={thStyle} onClick={() => handleSort('uniqueWords')}>Unique Words{arrow('uniqueWords')}</th>
+                      <th style={thStyle} onClick={() => handleSort('soloVerses')}>Solo Verses{arrow('soloVerses')}</th>
+                      <th style={thStyle} onClick={() => handleSort('totalViews')}>Total Views{arrow('totalViews')}</th>
+                      <th style={thStyle} onClick={() => handleSort('charCount')}>Characters{arrow('charCount')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sorted.map((stat, idx) => (
+                      <tr key={stat.name} style={{ background: idx % 2 === 0 ? '#181818' : '#222' }}>
+                        <td style={{ color: 'var(--color-primary)', fontWeight: 'bold', padding: '0.5em', textShadow: '2px 2px 0 #000, 4px 4px 8px #000a', cursor: 'pointer', textDecoration: 'underline', whiteSpace: 'nowrap' }}
+                          onClick={() => { nav.member(stat.name); setExpandedSongs({}); }}
+                        >{stat.name}</td>
+                        {activeWords.map(word => (
+                          <td key={word} style={{ color: 'var(--color-primary)', fontWeight: 'bold', padding: '0.5em', textAlign: 'center', background: idx % 2 === 0 ? '#120f00' : '#1a1200' }}>
+                            {stat.wordCounts?.[word] ?? 0}
+                          </td>
+                        ))}
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.albums}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.songs}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.totalBars}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.maxBars}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.avgBars}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.uniqueWords.toLocaleString()}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.soloVerses}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.totalViews ? stat.totalViews.toLocaleString() : '—'}</td>
+                        <td style={{ color: '#fff', padding: '0.5em', textAlign: 'center' }}>{stat.charCount.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               );
             })()}
           </div>

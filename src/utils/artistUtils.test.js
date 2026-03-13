@@ -189,18 +189,34 @@ describe('getDashboardStats', () => {
     expect(gza.avgBars).toBe(0);
   });
 
-  it('counts word query matches', () => {
+  it('counts word query matches across multiple words', () => {
     const albums = makeAlbums([
       { title: 'Song1', verses: [
         { type: 'verse', artists: ['RZA'], lyrics: 'cream get the money cream cream' },
         { type: 'verse', artists: ['GZA'], lyrics: 'no matching words' },
       ] },
     ]);
-    const stats = getDashboardStats(albums, members, 'cream');
+    const stats = getDashboardStats(albums, members, ['cream']);
     const rza = stats.find(s => s.name === 'RZA');
     const gza = stats.find(s => s.name === 'GZA');
-    expect(rza.wordCount).toBe(3);
-    expect(gza.wordCount).toBe(0);
+    expect(rza.wordCounts['cream']).toBe(3);
+    expect(gza.wordCounts['cream']).toBe(0);
+  });
+
+  it('counts multiple active words independently', () => {
+    const albums = makeAlbums([
+      { title: 'Song1', verses: [
+        { type: 'verse', artists: ['RZA'], lyrics: 'cream cream sword' },
+        { type: 'verse', artists: ['GZA'], lyrics: 'sword sword sword' },
+      ] },
+    ]);
+    const stats = getDashboardStats(albums, members, ['cream', 'sword']);
+    const rza = stats.find(s => s.name === 'RZA');
+    const gza = stats.find(s => s.name === 'GZA');
+    expect(rza.wordCounts['cream']).toBe(2);
+    expect(rza.wordCounts['sword']).toBe(1);
+    expect(gza.wordCounts['cream']).toBe(0);
+    expect(gza.wordCounts['sword']).toBe(3);
   });
 
   it('handles songs with no verses gracefully', () => {

@@ -13,18 +13,25 @@ export function formatViews(n) {
   return String(n);
 }
 
-export function getDashboardStats(albums, members, wordQuery) {
+// wordQueries: array of words to count per member (e.g. ['cream', 'sword'])
+export function getDashboardStats(albums, members, wordQueries = []) {
   if (!albums || !members || members.length === 0) return [];
+  const words = Array.isArray(wordQueries)
+    ? wordQueries.filter(Boolean)
+    : (wordQueries ? [wordQueries] : []);
   const memberNames = members.map(m => m.name);
   const stats = {};
   memberNames.forEach(m => {
-    stats[m] = { songs: new Set(), albums: new Set(), charCount: 0, totalBars: 0, maxBars: 0, uniqueWords: new Set(), soloVerses: 0, wordCount: 0, totalViews: 0 };
+    stats[m] = {
+      songs: new Set(), albums: new Set(), charCount: 0, totalBars: 0, maxBars: 0,
+      uniqueWords: new Set(), soloVerses: 0, totalViews: 0,
+      wordCounts: Object.fromEntries(words.map(w => [w, 0]))
+    };
   });
   albums.forEach(album => {
     if (!album.songs) return;
     album.songs.forEach(song => {
       if (!song.verses) return;
-      // Track which members appear in this song for pageview attribution
       const songMembers = new Set();
       song.verses.forEach(verse => {
         if (!verse.artists || !verse.lyrics) return;
@@ -42,14 +49,13 @@ export function getDashboardStats(albums, members, wordQuery) {
             if (bars > s.maxBars) s.maxBars = bars;
             if (isSolo) s.soloVerses++;
             verse.lyrics.toLowerCase().match(/[a-z']+/g)?.forEach(w => s.uniqueWords.add(w));
-            if (wordQuery) {
-              const regex = new RegExp(`\\b${wordQuery}\\b`, 'gi');
-              s.wordCount += (verse.lyrics.match(regex) || []).length;
-            }
+            words.forEach(word => {
+              const regex = new RegExp(`\\b${word}\\b`, 'gi');
+              s.wordCounts[word] += (verse.lyrics.match(regex) || []).length;
+            });
           }
         });
       });
-      // Attribute song pageviews to each member who appears
       if (song.pageviews && songMembers.size > 0) {
         songMembers.forEach(name => { stats[name].totalViews += song.pageviews; });
       }
@@ -69,7 +75,7 @@ export function getDashboardStats(albums, members, wordQuery) {
       uniqueWords: s.uniqueWords.size,
       soloVerses: s.soloVerses,
       totalViews: s.totalViews,
-      wordCount: s.wordCount
+      wordCounts: s.wordCounts
     };
   });
 }
