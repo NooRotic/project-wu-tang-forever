@@ -18,6 +18,12 @@ dist-ssr
 # Local docs
 docs/social_media.md
 
+# Local Claude Code state
+.claude/
+
+# Source assets already copied to public/
+NRx-FAVICON.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
