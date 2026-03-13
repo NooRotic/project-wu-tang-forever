@@ -26,7 +26,7 @@ describe('applyTheme', () => {
 
   it('sets document title with artist name', () => {
     applyTheme({ name: 'Wu-Tang Clan', theme: { primaryColor: '#F8D000' } });
-    expect(document.title).toBe('Wu-Tang Clan — Lyrics Explorer');
+    expect(document.title).toBe('Wu-Tang Clan Lyrics Explorer');
   });
 
   it('sets default document title when name is empty', () => {

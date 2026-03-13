@@ -9,7 +9,7 @@ export function applyTheme(config) {
   }
   if (t.primaryColorHover) root.style.setProperty('--color-primary-hover', t.primaryColorHover);
   if (t.headerFont) root.style.setProperty('--font-heading', t.headerFont);
-  document.title = config.name ? `${config.name} — Lyrics Explorer` : 'Lyrics Explorer';
+  document.title = config.name ? `${config.name} Lyrics Explorer` : 'Lyrics Explorer';
 }
 
 export function resetTheme() {
