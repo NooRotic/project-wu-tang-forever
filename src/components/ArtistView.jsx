@@ -305,6 +305,18 @@ function ArtistView({ slug, segments, navigate, onBack }) {
             {data && !selectedAlbum && (
               <>
                 <h2>Albums</h2>
+                <p style={{ color: '#aaa', fontSize: '0.95em', marginBottom: '1.5em', lineHeight: 1.6 }}>
+                  Select an album to browse songs and read lyrics.
+                  {isGroup && (
+                    <> Head to the{' '}
+                      <span
+                        onClick={nav.dashboard}
+                        style={{ color: 'var(--color-primary)', cursor: 'pointer', fontWeight: 'bold', textDecoration: 'underline' }}
+                      >Dashboard</span>{' '}
+                      to explore member stats and search words across the full catalogue.
+                    </>
+                  )}
+                </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2em' }}>
                   {data.albums.filter(album => album.songs && album.songs.length > 0).map((album, idx) => (
                     <div key={idx} style={{ minWidth: 200, cursor: 'pointer' }} onClick={() => nav.album(album.title)}>
